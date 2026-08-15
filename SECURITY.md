@@ -16,7 +16,7 @@ By restricting your API key, you ensure that **only your authorized website doma
 ### Step-by-Step Instructions:
 
 1. Open the [Google Cloud Console Credentials Page](https://console.cloud.google.com/apis/credentials).
-2. Select your Firebase project: `heart-health-app-85a13`.
+2. Select your Firebase project (e.g. `<your-project-id>`).
 3. Under **API Keys**, locate the key corresponding to your web app (starts with `AIzaSy...`).
 4. Click the pencil/edit icon ✏️ to modify the key.
 
@@ -25,9 +25,9 @@ By restricting your API key, you ensure that **only your authorized website doma
 2. Under **Website restrictions**, click **ADD**:
    - `http://localhost:*`
    - `http://127.0.0.1:*`
-   - `https://abhineet115.github.io/*`
-   - `https://heart-health-app-85a13.firebaseapp.com/*`
-   - `https://heart-health-app-85a13.web.app/*`
+   - `https://<your-username>.github.io/*`
+   - `https://<your-project-id>.firebaseapp.com/*`
+   - `https://<your-project-id>.web.app/*`
 
 ### B. Set API Restrictions
 1. Under **API restrictions**, select **Restrict key**.
@@ -45,14 +45,14 @@ By restricting your API key, you ensure that **only your authorized website doma
 Ensure that OAuth sign-in providers (such as Google Sign-In) only accept requests originating from your verified domains.
 
 1. Go to the [Firebase Console](https://console.firebase.google.com/).
-2. Open your project: **heart-health-app-85a13**.
+2. Open your project.
 3. Navigate to **Build** > **Authentication** > **Settings** tab.
 4. Click on **Authorized domains**.
 5. Ensure only your approved domains are listed:
    - `localhost`
-   - `heart-health-app-85a13.firebaseapp.com`
-   - `heart-health-app-85a13.web.app`
-   - `abhineet115.github.io`
+   - `<your-project-id>.firebaseapp.com`
+   - `<your-project-id>.web.app`
+   - `<your-username>.github.io`
 
 ---
 

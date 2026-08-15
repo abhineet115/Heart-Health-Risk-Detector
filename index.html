@@ -565,21 +565,21 @@
         </div>
     </footer>
 
+    <!-- Load local Firebase configuration if available -->
+    <script src="firebase-config.js"></script>
     <script>
-        // IMPORTANT: MOVE THESE TO ENVIRONMENT VARIABLES IN PRODUCTION
-        // For development only - DO NOT expose in production
-        const firebaseConfig = {
-            apiKey: "AIzaSyA45vVVBhq0366UG-_j6m865jnzuTmDIqM",
-            authDomain: "heart-health-app-85a13.firebaseapp.com",
-            projectId: "heart-health-app-85a13",
-            storageBucket: "heart-health-app-85a13.firebasestorage.app",
-            messagingSenderId: "505759364463",
-            appId: "1:505759364463:web:f570c0eb5b62de8408249a",
-            measurementId: "G-34XJZ9E9QE"
-        };
-
-        window.__firebase_config = JSON.stringify(firebaseConfig);
-        window.__app_id = firebaseConfig.projectId;
+        // Fallback for public repository / offline mode if firebase-config.js is not present
+        if (!window.__firebase_config) {
+            window.__firebase_config = JSON.stringify({
+                apiKey: "YOUR_API_KEY_HERE",
+                authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+                projectId: "YOUR_PROJECT_ID",
+                storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
+                messagingSenderId: "YOUR_SENDER_ID",
+                appId: "YOUR_APP_ID"
+            });
+            window.__app_id = "default-app-id";
+        }
     </script>
 
     <script type="module" src="script.js"></script>

@@ -153,31 +153,15 @@ To connect the application to your own Firebase backend:
 2. Enable **Authentication**:
    - Enable **Email/Password** provider.
    - Enable **Google** sign-in provider.
-   - In **Authorized Domains**, add `localhost` and your GitHub Pages domain (`<username>.github.io`).
+   - In **Authorized Domains**, add `localhost`, `127.0.0.1`, and your GitHub Pages domain (`<username>.github.io`).
 3. Create a **Cloud Firestore Database**:
-   - Start in **Production mode** or **Test mode**.
-   - Configure security rules to allow authenticated users to read and write their own documents:
-     ```javascript
-     rules_version = '2';
-     service cloud.firestore {
-       match /databases/{database}/documents {
-         match /users/{userId}/records/{recordId} {
-           allow read, write: if request.auth != null && request.auth.uid == userId;
-         }
-       }
-     }
-     ```
-4. Update the `firebaseConfig` object at the bottom of `index.html`:
-   ```javascript
-   const firebaseConfig = {
-       apiKey: "YOUR_API_KEY",
-       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-       projectId: "YOUR_PROJECT_ID",
-       storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-       messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-       appId: "YOUR_APP_ID"
-   };
+   - Apply the security rules from [`firestore.rules`](firestore.rules).
+4. Copy the template configuration file:
+   ```bash
+   cp firebase-config.example.js firebase-config.js
    ```
+5. Fill in your project keys in `firebase-config.js`. (Note: `firebase-config.js` is included in `.gitignore` so your personal keys are never committed to public repositories).
+6. Read [`SECURITY.md`](SECURITY.md) for full instructions on setting API key HTTP referrer restrictions in Google Cloud Console.
 
 ---
 
@@ -185,10 +169,13 @@ To connect the application to your own Firebase backend:
 
 ```text
 Heart-Health-Risk-Detector/
-├── index.html        # Main HTML layout, navigation, forms, modals & templates
-├── script.js         # Core application logic, risk scoring algorithms, Firebase & Chart.js integration
-├── style.css         # Custom animations, meter UI styling, responsive overrides
-└── README.md         # Project documentation and setup guide
+├── index.html                  # Main HTML layout, navigation, forms, modals & templates
+├── script.js                   # Core application logic, risk scoring algorithms & Firebase integration
+├── style.css                   # Custom animations, meter UI styling, responsive overrides
+├── firebase-config.example.js  # Public template for Firebase credentials
+├── firestore.rules             # Production database access rules
+├── SECURITY.md                 # Security hardening & API key restriction guide
+└── README.md                   # Project documentation and setup guide
 ```
 
 ---

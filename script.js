@@ -507,7 +507,13 @@ const riskFactors = {
 
 // === FIREBASE INITIALIZATION ===
 
-if (firebaseConfig && Object.keys(firebaseConfig).length > 0) {
+const isConfigured = firebaseConfig && 
+                     firebaseConfig.apiKey && 
+                     !firebaseConfig.apiKey.includes('YOUR_') && 
+                     firebaseConfig.projectId && 
+                     !firebaseConfig.projectId.includes('YOUR_');
+
+if (isConfigured) {
     try {
         app = initializeApp(firebaseConfig);
         auth = getAuth(app);
@@ -579,12 +585,11 @@ if (firebaseConfig && Object.keys(firebaseConfig).length > 0) {
 
     } catch (e) {
         console.error("Firebase initialization failed:", e);
-        alert("Database connection failed. Some features may not work.");
         auth = null;
         db = null;
     }
 } else {
-    console.warn("Firebase config is missing. Database features will be disabled.");
+    console.info("Firebase is running in local/demo mode. Copy firebase-config.example.js to firebase-config.js to enable Cloud sync.");
     auth = null;
     db = null;
 }
