@@ -1336,6 +1336,12 @@ async function handleSignUp(e) {
     
     signUpError.classList.add('hidden');
     
+    if (!auth) {
+        signUpError.textContent = 'Firebase is not initialized. Please ensure firebase-config.js is loaded.';
+        signUpError.classList.remove('hidden');
+        return;
+    }
+    
     // ADDED: Name validation
     if (!name || name.trim() === '') {
         signUpError.textContent = 'Please enter your full name.';
@@ -1387,6 +1393,12 @@ async function handleLogin(e) {
     
     loginError.classList.add('hidden');
     
+    if (!auth) {
+        loginError.textContent = 'Firebase is not initialized. Please ensure firebase-config.js is loaded.';
+        loginError.classList.remove('hidden');
+        return;
+    }
+    
     try {
         await signInWithEmailAndPassword(auth, email, password);
         // Auth state listener will handle UI updates
@@ -1395,7 +1407,7 @@ async function handleLogin(e) {
         let errorMessage = error.message;
         
         // Provide user-friendly error messages
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
             errorMessage = 'Invalid email or password. Please try again.';
         } else if (error.code === 'auth/invalid-email') {
             errorMessage = 'Please enter a valid email address.';
@@ -1409,10 +1421,16 @@ async function handleLogin(e) {
 }
 
 async function handleGoogleSignIn() {
-    const provider = new GoogleAuthProvider();
-    
     loginError.classList.add('hidden');
     signUpError.classList.add('hidden');
+    
+    if (!auth) {
+        loginError.textContent = 'Firebase is not initialized. Please ensure firebase-config.js is loaded.';
+        loginError.classList.remove('hidden');
+        return;
+    }
+    
+    const provider = new GoogleAuthProvider();
     
     try {
         await signInWithPopup(auth, provider);
@@ -1433,6 +1451,7 @@ async function handleGoogleSignIn() {
 }
 
 async function handleSignOut() {
+    if (!auth) return;
     try {
         await signOut(auth);
         // Auth state listener will handle UI updates
@@ -1448,6 +1467,12 @@ async function handlePasswordReset(e) {
     
     resetError.classList.add('hidden');
     resetMessage.classList.add('hidden');
+    
+    if (!auth) {
+        resetError.textContent = 'Firebase is not initialized.';
+        resetError.classList.remove('hidden');
+        return;
+    }
     
     if (!email) {
         resetError.textContent = 'Please enter your email address.';
